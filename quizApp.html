@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/10app_js.css">
+    <script src="https://kit.fontawesome.com/86da99bbfa.js" crossorigin="anonymous"></script>
+    <title>Quiz App!</title>
+  </head>
+  <body class="text-light bg-dark">
+    <h1 class="text-center text-danger">Quiz App</h1>
+    <div class="contianer">
+     <!--form facepage-->
+      <form class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 bg-light text-dark mt-5"><div class="shadow-lg p-3 mb-5 bg-white rounded mt-5">
+          <div class="from-group  mt-3"><b for="email">E-mail</b><input type="email"name="email"placeholder="Your Email"class="form-control"></div>
+          <div class="from-group mt-4"><b for="password">password</b><input type="password"name="password"id="password"placeholder="Your Password"class="form-control">
+           <!--eye password-->
+            <i style="position: absolute;right: 40px;transform: translate(0,-160%);cursor: pointer;" id="showpass"class="fas fa-eye"></i>
+           </div>
+           <!--javascript function show password-->
+           <script>
+             const eye=document.getElementById("showpass");
+             const password=document.getElementById("password");
+             eye.addEventListener("click",function(evt)
+             {if(password.type==="password"){password.type="text"}else{password.type="password"}})
+           </script>
+           <!--radio-->
+          <div class="from-group mt-4"><input type="radio"name="radio"> <b>I'accept</b></div>
+         <!--button modal bch thaz ll Quiz -->
+          <div class="from-group mt-3"><button type="button"class="btn btn-danger btn-lg btn-block"  data-toggle="modal" data-target="#quizmodal">GO TO QUIZ</button>
+            <div class="modal fade"id="quizmodal">
+              <div class="modal-dialog">
+                <div  class="modal-content">
+                  <div class="modal-header">
+                    <h3 class="title">Welcome to Your Quiz</h3><button type="button" class="close"data-dismiss="modal">X</button></div>
+                  <div class="modal-body">
+                    <div class="contianer"id="theEnd">
+                    <h5 class="text-center"id="question_text">question text</h5>
+                    <ul class="mt-4">
+                      <li style="list-style: none;"><input type="radio"name="a"class="answer"value="a"id="a">"&nbsp;&nbsp;&nbsp;<label id="a_text">answer_1</label></li>
+                      <li style="list-style: none;"><input type="radio"name="a"class="answer"value="b"id="b">&nbsp;&nbsp;&nbsp;<label id="b_text">answer_1</label></li>
+                      <li style="list-style: none;"><input type="radio"name="a"class="answer"value="c"id="c">&nbsp;&nbsp;&nbsp;<label id="c_text">answer_1</label></li>
+                      <li style="list-style: none;"><input type="radio"name="a"class="answer"value="d"id="d">&nbsp;&nbsp;&nbsp;<label id="d_text">answer_1</label></li>
+                    </ul>
+                  </div></div>
+                  <div class="modal-footer"><button type="button"class="btn btn-primary btn-lg btn-block"id="next">NEXT</button></div>
+                </div>
+                </div>
+              </div>
+            </div>
+            </div>
+        </div>
+      </form>
+    </div>
+    <!--javascript Quiz project-->
+    <script>
+      //the quation and the answar
+      const quizdata=[{quation:"what is the most used programming language in 2019?",
+    a:"java",
+    b:"C++",
+    c:"python",
+    d:"javascript",
+    correct:"d",
+  },
+{quation:"who is the president of US ?",
+a:"florin pop",
+b:"donald trump",
+c:"joe Biden",
+d:"Iven Saldano",
+correct:"c"},
+{quation:"what deas HTML stand for ?",
+a:"hypertext markup language",
+b:"cascating style sheets",
+c:"jason object Notation",
+d:"helicopter terminas motorboeat lamborginis",
+correct:"a",},
+{quation:"what year was javascript launched ?",
+a:"1996",
+b:"1995",
+c:"1994",
+d:"none of above",
+correct:"b",}]
+      const question_text=document.getElementById("question_text")
+      const a_text=document.getElementById("a_text")
+      const b_text=document.getElementById("b_text")
+      const c_text=document.getElementById("c_text")
+      const d_text=document.getElementById("d_text")
+      const next=document.getElementById("next")
+      const quizmodal=document.getElementById("quizmodal")
+      const answerALL=document.getElementsByClassName("answer")
+      const theEnd=document.getElementById("theEnd");
+      question_text.innerHTML=quizdata[0].quation;
+        a_text.innerHTML=quizdata[0].a;
+        b_text.innerHTML=quizdata[0].b;
+        c_text.innerHTML=quizdata[0].c;
+        d_text.innerHTML=quizdata[0].d;
+      let numberQiuz=0;
+      let score=0;
+      function quizbreak(){if(numberQiuz<4) {getSelected();leadQui();}else{message();}}
+          //display the Quiz from Quiz
+      function leadQui(){
+        const numberQiuzdata=quizdata[numberQiuz]
+        question_text.innerHTML=numberQiuzdata.quation;
+        a_text.innerHTML=numberQiuzdata.a;
+        b_text.innerHTML=numberQiuzdata.b;
+        c_text.innerHTML=numberQiuzdata.c;
+        d_text.innerHTML=numberQiuzdata.d;
+      }
+      //to calcul your answer
+      function your_score(){for(let i=0; i< answerALL.length; i++){if  (answerALL[i].checked){if
+        (answerALL[i].id===quizdata[numberQiuz].correct){score++;}}}}
+        //final message
+        function message(){if(numberQiuz==quizdata.length){
+          theEnd.innerHTML="<h3>your answered "+score+"/"+quizdata.length+" correctly answer</h3>";
+          next.innerHTML="Reload"
+          next.addEventListener("click",function(){location.reload();})}}
+      //if te user check the answer or not 
+
+      function getSelected() {if(numberQiuz<4){for(let i=0; i< answerALL.length; i++){if
+        (answerALL[i].checked){
+       //the correct answer
+       
+      your_score();
+        //next quiz
+      numberQiuz++;
+          
+          leadQui();
+        
+        
+          //bch nraje3 check =false
+          answerALL[i].checked=false;
+            //bch nbadel button in the END 
+            if(numberQiuz<quizdata.length-1){}else{next.innerHTML="THE END";
+           
+            }}}};}
+       
+      next.addEventListener("click",function(){quizbreak();message();})
+     
+    </script>
+    
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    
+    <!-- Option 2: jQuery, Popper.js, and Bootstrap JS-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+  </body>
+</html>
